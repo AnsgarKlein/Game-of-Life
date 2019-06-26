@@ -1,6 +1,3 @@
-#CC         :=  gcc
-CC         :=  clang
-
 FLAGS      :=  -std=c17 -g
 FLAGS      +=  -Wall -Wextra -Wpedantic
 FLAGS      +=  -pthread -fopenmp
