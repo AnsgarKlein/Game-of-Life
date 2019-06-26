@@ -8,6 +8,12 @@ FLAGS      +=  -pthread -fopenmp
 SOURCEDIR  :=  src
 BUILDDIR   :=  build
 
+TARGET     :=  game
+
+SOURCES     =  $(notdir $(wildcard $(SOURCEDIR)/*.c))
+HEADERS     =  $(notdir $(wildcard $(SOURCEDIR)/*.h))
+OBJECTS     =  $(SOURCES:.c=.o)
+
 LIBRARIES   =  sdl2
 LIBRARIES  +=  SDL2_image
 LIBRARIES  +=  gl
@@ -19,13 +25,6 @@ CFLAGS     +=  $(shell pkg-config --cflags $(LIBRARIES))
 LDFLAGS     =  $(FLAGS)
 LDFLAGS    +=  $(shell pkg-config --libs $(LIBRARIES))
 
-TARGET     :=  game
-
-SOURCES    :=  $(notdir $(wildcard $(SOURCEDIR)/*.c))
-
-HEADERS    :=  $(notdir $(wildcard $(SOURCEDIR)/*.h))
-
-OBJECTS    :=  $(SOURCES:.c=.o)
 
 
 .PHONY: all clean debug optimized
