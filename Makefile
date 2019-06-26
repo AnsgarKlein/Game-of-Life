@@ -44,18 +44,6 @@ optimized: all
 profiling: CFLAGS += -pg
 profiling: LDFLAGS += -pg
 profiling: all
-
-lint:
-	splint $(shell pkg-config --cflags $(LIBRARIES)) $(addprefix $(SOURCEDIR)/, $(SOURCES))
-
-$(BUILDDIR)/$(TARGET): $(addprefix $(BUILDDIR)/, $(OBJECTS))
-	@echo " [LD]      $@"
-	@$(CC) $(LDFLAGS) $^ -o $@
-
-$(BUILDDIR)/%.o: $(SOURCEDIR)/%.c $(addprefix $(SOURCEDIR)/, $(HEADERS))
-	@echo " [CC]      $@"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
 clean: 
 	@# Remove executable
 	@if [[ -f $(BUILDDIR)/$(TARGET) ]]; then \
@@ -68,4 +56,17 @@ clean:
 	  echo " [CLEAN]   $$obj" ; \
 	  rm -f $$obj ; \
 	done
+
+
+lint:
+	splint $(shell pkg-config --cflags $(LIBRARIES)) $(addprefix $(SOURCEDIR)/, $(SOURCES))
+
+
+$(BUILDDIR)/$(TARGET): $(addprefix $(BUILDDIR)/, $(OBJECTS))
+	@echo " [LD]      $@"
+	@$(CC) $(LDFLAGS) $^ -o $@
+
+$(BUILDDIR)/%.o: $(SOURCEDIR)/%.c $(addprefix $(SOURCEDIR)/, $(HEADERS))
+	@echo " [CC]      $@"
+	@$(CC) $(CFLAGS) -c $< -o $@
 	
