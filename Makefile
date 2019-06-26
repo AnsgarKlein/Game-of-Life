@@ -8,15 +8,15 @@ FLAGS      +=  -pthread -fopenmp
 SOURCEDIR  :=  src
 BUILDDIR   :=  build
 
-LIBRARIES  :=  sdl2
+LIBRARIES   =  sdl2
 LIBRARIES  +=  SDL2_image
 LIBRARIES  +=  gl
 LIBRARIES  +=  glu
 
-CFLAGS     :=  $(FLAGS) -x c
+CFLAGS      =  $(FLAGS) -x c
 CFLAGS     +=  $(shell pkg-config --cflags $(LIBRARIES))
 
-LDFLAGS    :=  $(FLAGS)
+LDFLAGS     =  $(FLAGS)
 LDFLAGS    +=  $(shell pkg-config --libs $(LIBRARIES))
 
 TARGET     :=  game
