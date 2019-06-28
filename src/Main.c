@@ -71,23 +71,6 @@ int main(int argc, char **argv) {
     // Load random level
     //load_random_level(1000, 1000);
 
-
-    // Measure time for 50 runs
-    //struct timespec start, end;
-    //clock_gettime(CLOCK_MONOTONIC, &start);
-    //for (int i = 0; i < 50; i++) {
-    //    //printf("Step %d\n", i);
-    //    //world_print();
-    //    step();
-    //}
-    //clock_gettime(CLOCK_MONOTONIC, &end);
-    //double runtime = end.tv_sec - start.tv_sec;
-    //double msec = abs(end.tv_nsec - start.tv_nsec) / 1000000000.0;
-    //runtime += msec;
-    //printf("\n50 runs took: %f\n", runtime);
-    //return 0;
-
-
     if (!View_initialize(WORLD_WIDTH, WORLD_HEIGHT)) {
         fprintf(stderr, "Could not initialize view\n");
         return 1;

@@ -53,9 +53,6 @@ unsigned char BitVector_get(const unsigned char *vec, unsigned long index) {
     int byte = index / 8;
     int offset = index % 8;
 
-    //printf("Reading field (%d,%d) (field nr %d) from byte %d << %d...\n",
-    //        x, y, index, byte, offset);
-
     unsigned char bit = ((unsigned char)vec[byte] >> offset) & 0x01;
 
     return bit;
