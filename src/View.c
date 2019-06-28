@@ -126,17 +126,6 @@ static bool initialize_opengl() {
     // Clear backround
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //glClear(GL_COLOR_BUFFER_BIT);
-    //glBegin(GL_QUADS);
-    //glVertex2f(-0.5f, -0.5f);
-    //glVertex2f( 0.5f, -0.5f);
-    //glVertex2f( 0.5f,  0.5f);
-    //glVertex2f(-0.5f,  0.5f);
-    //glEnd();
-    //SDL_GL_SwapWindow(WINDOW);
-
-
-
     // Check if errors ocurred
     GLenum error = GL_NO_ERROR;
     error = glGetError();
@@ -162,10 +151,6 @@ bool View_initialize(unsigned int world_width, unsigned int world_height) {
     if (!initialize_opengl()) {
         return false;
     }
-
-    //SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
 
     return true;
 }
