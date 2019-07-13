@@ -13,7 +13,7 @@ unsigned int WORLD_HEIGHT = 32;
 unsigned char *WORLD = NULL;
 
 void world_set8(unsigned int byte, uint8_t val) {
-    if (byte < 0 || byte >= (WORLD_WIDTH * WORLD_HEIGHT) / 8) {
+    if (byte >= (WORLD_WIDTH * WORLD_HEIGHT) / 8) {
         fprintf(stderr,
                 "Setting illegal 8 fields in byte %d on world of size (%d,%d) (%d elements, %d byte)\n",
                 byte, WORLD_WIDTH, WORLD_HEIGHT, WORLD_WIDTH * WORLD_HEIGHT,
@@ -24,7 +24,7 @@ void world_set8(unsigned int byte, uint8_t val) {
 }
 
 void world_seti(unsigned int index, unsigned char state) {
-    if (index < 0 || index >= WORLD_WIDTH * WORLD_HEIGHT) {
+    if (index >= WORLD_WIDTH * WORLD_HEIGHT) {
         fprintf(stderr,
                 "Setting illegal field (index: %d) on world of size (%d,%d) (%d elements)\n",
                 index, WORLD_WIDTH, WORLD_HEIGHT, WORLD_WIDTH * WORLD_HEIGHT);
@@ -34,7 +34,7 @@ void world_seti(unsigned int index, unsigned char state) {
 }
 
 void world_setxy(unsigned int x, unsigned int y, unsigned char state) {
-    if (x < 0 || y < 0 || x >= WORLD_WIDTH || y >= WORLD_HEIGHT) {
+    if (x >= WORLD_WIDTH || y >= WORLD_HEIGHT) {
         fprintf(stderr, "Setting illegal field (%d,%d) on world of size (%d,%d)\n",
                 x, y, WORLD_WIDTH, WORLD_HEIGHT);
     }
@@ -47,7 +47,7 @@ unsigned char world_get(unsigned int x, unsigned int y) {
     unsigned int index = y * WORLD_WIDTH + x;
 
     // Fields outside of game board are dead
-    if (x < 0 || y < 0 || x >= WORLD_WIDTH || y >= WORLD_HEIGHT) {
+    if (x >= WORLD_WIDTH || y >= WORLD_HEIGHT) {
         fprintf(stderr, "Getting illegal field (%d,%d) on world of size (%d,%d)\n",
                 x, y, WORLD_WIDTH, WORLD_HEIGHT);
         return DEAD;
