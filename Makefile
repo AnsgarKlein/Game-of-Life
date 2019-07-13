@@ -1,6 +1,5 @@
 FLAGS      :=  -std=c17 -g
 FLAGS      +=  -Wall -Wextra -Wpedantic
-FLAGS      +=  -pthread -fopenmp
 
 SOURCEDIR  :=  src
 BUILDDIR   :=  build
@@ -13,8 +12,6 @@ OBJECTS     =  $(SOURCES:.c=.o)
 
 LIBRARIES   =  sdl2
 LIBRARIES  +=  SDL2_image
-LIBRARIES  +=  gl
-LIBRARIES  +=  glu
 
 CFLAGS      =  $(FLAGS) -x c
 CFLAGS     +=  $(shell pkg-config --cflags $(LIBRARIES))
@@ -24,22 +21,36 @@ LDFLAGS    +=  $(shell pkg-config --libs $(LIBRARIES))
 
 
 
-.PHONY: all clean debug optimized
+ifdef GAMEOFLIFE_DEBUG
+    CFLAGS      += -g
+    LDFLAGS     += -g
+endif
+
+ifdef GAMEOFLIFE_OPTIMIZED
+    CFLAGS      += -O3
+    LDFLAGS     += -O3
+endif
+
+ifdef GAMEOFLIFE_PROFILING
+    CFLAGS      += -pg
+    LDFLAGS     += -pg
+endif
+
+ifdef GAMEOFLIFE_OPENGL
+    LIBRARIES   += gl
+    LIBRARIES   += glu
+    CFLAGS	    += -D USE_OPENGL
+endif
+
+ifdef GAMEOFLIFE_OMP
+    FLAGS      += -pthread -fopenmp
+endif
+
+.PHONY: all clean debug
 
 all: $(BUILDDIR)/$(TARGET) $(addprefix $(SOURCEDIR)/, $(SOURCES)) $(addprefix $(SOURCEDIR)/, $(HEADERS))
 	@#
 
-debug: CFLAGS += -g
-debug: LDFLAGS += -g
-debug: all
-
-optimized: CFLAGS += -O3
-optimized: LDFLAGS += -O3
-optimized: all
-
-profiling: CFLAGS += -pg
-profiling: LDFLAGS += -pg
-profiling: all
 clean: 
 	@# Remove executable
 	@if [[ -f $(BUILDDIR)/$(TARGET) ]]; then \

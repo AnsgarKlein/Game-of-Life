@@ -5,8 +5,11 @@
 #include <stdlib.h>
 
 #include <SDL.h>
+
+#ifdef USE_OPENGL
 #include <SDL_opengl.h>
 #include <GL/glu.h>
+#endif
 
 #include "BitVector.h"
 

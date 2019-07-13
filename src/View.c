@@ -38,6 +38,7 @@ static void initialize_window_sizes(unsigned int world_width, unsigned int world
     FIELD_SIZE = f;
 }
 
+#ifndef USE_OPENGL
 static inline uint32_t get_color(unsigned int x, unsigned int y) {
     uint8_t r = 200;
     uint8_t g;
@@ -53,6 +54,7 @@ static inline uint32_t get_color(unsigned int x, unsigned int y) {
 
     return SDL_MapRGB(WINSURFACE->format, r, g, b);
 }
+#endif
 
 static bool initialize_sdl() {
     //Initialize SDL
@@ -99,6 +101,7 @@ static bool initialize_sdl() {
     return true;
 }
 
+#ifdef USE_OPENGL
 static bool initialize_opengl() {
     // Use OpenGL version 2.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -137,6 +140,7 @@ static bool initialize_opengl() {
 
     return true;
 }
+#endif
 
 bool View_initialize(unsigned int world_width, unsigned int world_height) {
     // Calculate window size
@@ -147,10 +151,12 @@ bool View_initialize(unsigned int world_width, unsigned int world_height) {
         return false;
     }
 
+    #ifdef USE_OPENGL
     // Initialize OpenGl
     if (!initialize_opengl()) {
         return false;
     }
+    #endif
 
     return true;
 }
@@ -163,13 +169,8 @@ void View_deinitialize() {
     SDL_Quit();
 }
 
-
-
 void View_set_fields(const unsigned char *vec, unsigned int width, unsigned int height) {
-    //TODO: Remove opengl or non-opengl path
-    const bool opengl = false;
-
-    if (opengl) {
+    #ifdef USE_OPENGL
         // Clear so we dont have to set unset parts
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -194,7 +195,7 @@ void View_set_fields(const unsigned char *vec, unsigned int width, unsigned int 
         }
 
         SDL_GL_SwapWindow(WINDOW);
-    } else {
+    #else
         for (unsigned long i = 0; i < width * height; i++) {
             unsigned int x = i % width;
             unsigned int y = i / width;
@@ -224,6 +225,6 @@ void View_set_fields(const unsigned char *vec, unsigned int width, unsigned int 
             fprintf(stderr, "Could not update window surface!\n"
                     "SDL_Error: '%s'\n", SDL_GetError());
         }
-    }
+    #endif
 }
 
